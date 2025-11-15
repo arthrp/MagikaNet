@@ -16,9 +16,6 @@ public static class NativeResolver
     
     private static IntPtr Resolver(string libraryName, Assembly assembly, DllImportSearchPath? searchPath)
     {
-        Console.WriteLine("Is linux:"+RuntimeInformation.IsOSPlatform(OSPlatform.Linux) + " Is macos:"+RuntimeInformation.IsOSPlatform(OSPlatform.OSX));
-        Console.WriteLine($"rid: {RuntimeInformation.RuntimeIdentifier}");
-        
         string libFileName;
         if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             libFileName = "libmagika_ffi.dylib";
