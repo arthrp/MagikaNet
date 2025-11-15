@@ -16,18 +16,36 @@ public static class NativeResolver
     
     private static IntPtr Resolver(string libraryName, Assembly assembly, DllImportSearchPath? searchPath)
     {
-        // Console.WriteLine($"Resolving native library: {libraryName} in runtime {RuntimeInformation.RuntimeIdentifier}");
+        Console.WriteLine("Is linux:"+RuntimeInformation.IsOSPlatform(OSPlatform.Linux) + " Is macos:"+RuntimeInformation.IsOSPlatform(OSPlatform.OSX));
+        Console.WriteLine($"rid: {RuntimeInformation.RuntimeIdentifier}");
+        
+        string libFileName;
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            libFileName = "libmagika_ffi.dylib";
+        else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) && RuntimeInformation.ProcessArchitecture == Architecture.X64)
+            libFileName = "libmagika_ffi.so";
+        else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && RuntimeInformation.ProcessArchitecture == Architecture.X64)
+            libFileName = "magika_ffi.dll";
+        else
+            throw new PlatformNotSupportedException();
     
         // prefer full path in app folder (adjust subpath as you packaged it)
         string baseDir = AppContext.BaseDirectory;
         var fullDir = Path.Combine(baseDir, "runtimes", RuntimeInformation.RuntimeIdentifier ?? "", "native",
-            libraryName);
+            libFileName);
+        
+        // Console.WriteLine("Trying "+fullDir);
 
+        //Prefer the one bundled
         if (File.Exists(fullDir))
         {
             if (NativeLibrary.TryLoad(fullDir, out var handle))
                 return handle;
         }
+        
+        //Try other places
+        if (NativeLibrary.TryLoad(libFileName, out var globalHandle))
+            return globalHandle;
     
         // fall back to default resolution
         return IntPtr.Zero;
