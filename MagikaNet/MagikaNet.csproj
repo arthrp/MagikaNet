@@ -38,7 +38,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="runtimes\win-x64\native\" />
+        <None Include="..\README.md" Pack="true" PackagePath="\" />
     </ItemGroup>
 
 </Project>
