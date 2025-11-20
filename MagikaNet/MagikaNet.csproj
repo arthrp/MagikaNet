@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
     </PropertyGroup>
@@ -33,7 +32,7 @@
         <None Include="runtimes\win-x64\native\magika_ffi.dll">
             <Pack>true</Pack>
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-            <PackagePath>runtimes\linux-x64\native</PackagePath>
+            <PackagePath>runtimes\win-x64\native</PackagePath>
         </None>
     </ItemGroup>
 
