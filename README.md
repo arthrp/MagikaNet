@@ -1,6 +1,6 @@
 # MagikaNet
 
-.NET bindings to [magika](https://github.com/google/magika) - AI-powered library for file type detection. Powered by [magika_ffi](https://github.com/arthrp/magika_ffi) that exposes magika functions via FFI.
+.NET wrapper for [magika](https://github.com/google/magika) - AI-powered library for file type detection. Powered by [magika_ffi](https://github.com/arthrp/magika_ffi) that exposes magika functions via FFI.
 
 ## Features
 
