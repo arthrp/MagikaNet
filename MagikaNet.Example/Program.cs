@@ -1,4 +1,7 @@
-﻿namespace MagikaNet.Example;
+﻿using System.Text;
+using System.Text.Unicode;
+
+namespace MagikaNet.Example;
 
 class Program
 {
@@ -6,8 +9,8 @@ class Program
     {
         using var m = new MagikaClient();
 
-        var x = m.DetectPath("/tmp/example.jpg");
-        
-        Console.WriteLine(x);
+        var str = "#!/bin/sh\necho hello\n";
+        var y = m.DetectBytes(Encoding.UTF8.GetBytes(str));
+        Console.WriteLine(y);
     }
 }

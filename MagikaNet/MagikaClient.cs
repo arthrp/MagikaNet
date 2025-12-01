@@ -27,6 +27,21 @@ public sealed class MagikaClient : IDisposable
         }
     }
 
+    public string DetectBytes(byte[] arr)
+    {
+        var sPtr = NativeMagika.DetectBytesJson(_handle, arr, arr.Length);
+        
+        try
+        {
+            var result = Marshal.PtrToStringUTF8(sPtr)!;
+            return result;
+        }
+        finally
+        {
+            NativeMagika.StringFree(sPtr);
+        }
+    }
+
     public void Dispose()
     {
         if (_handle != IntPtr.Zero)

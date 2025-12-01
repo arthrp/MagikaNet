@@ -11,6 +11,9 @@ internal static class NativeMagika
     
     [DllImport(LibName, EntryPoint = "magika_identify_path_json", CallingConvention = CallingConvention.Cdecl)]
     public static extern IntPtr DetectPathJson(IntPtr handle, string path);
+
+    [DllImport(LibName, EntryPoint = "magika_identify_content_json", CallingConvention = CallingConvention.Cdecl)]
+    public static extern IntPtr DetectBytesJson(IntPtr handle, byte[] arr, int len);
     
     [DllImport(LibName, EntryPoint = "magika_string_free", CallingConvention = CallingConvention.Cdecl)]
     public static extern void StringFree(IntPtr s);
