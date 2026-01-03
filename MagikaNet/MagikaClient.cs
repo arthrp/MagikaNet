@@ -1,4 +1,5 @@
 ﻿using System.Runtime.InteropServices;
+using System.Text.Json;
 
 namespace MagikaNet;
 
@@ -12,7 +13,13 @@ public sealed class MagikaClient : IDisposable
         if (_handle == IntPtr.Zero) throw new InvalidOperationException("Failed to init Magika.");
     }
 
-    public string DetectPath(string path)
+    /// <summary>
+    /// Identify file from path and return json result as a string
+    /// </summary>
+    /// <param name="path"></param>
+    /// <returns></returns>
+    /// <exception cref="InvalidOperationException"></exception>
+    public string DetectPathJson(string path)
     {
         var sPtr = NativeMagika.DetectPathJson(_handle, path);
         if (sPtr == IntPtr.Zero) throw new InvalidOperationException("Detection failed.");
@@ -27,7 +34,24 @@ public sealed class MagikaClient : IDisposable
         }
     }
 
-    public string DetectBytes(byte[] arr)
+    /// <summary>
+    /// Identify file from path and return object with results
+    /// </summary>
+    /// <param name="path"></param>
+    /// <returns></returns>
+    public DetectionResult? DetectPath(string path)
+    {
+        var json = DetectPathJson(path);
+        var result = JsonSerializer.Deserialize<DetectionResult>(json);
+        return result;
+    }
+
+    /// <summary>
+    /// Identify file from bytes and return json result as a string
+    /// </summary>
+    /// <param name="arr"></param>
+    /// <returns></returns>
+    public string DetectBytesJson(byte[] arr)
     {
         var sPtr = NativeMagika.DetectBytesJson(_handle, arr, arr.Length);
         
@@ -40,6 +64,18 @@ public sealed class MagikaClient : IDisposable
         {
             NativeMagika.StringFree(sPtr);
         }
+    }
+
+    /// <summary>
+    /// Identify file from bytes and return object with results
+    /// </summary>
+    /// <param name="arr"></param>
+    /// <returns></returns>
+    public DetectionResult? DetectBytes(byte[] arr)
+    {
+        var json = DetectBytesJson(arr);
+        var result = JsonSerializer.Deserialize<DetectionResult>(json);
+        return result;
     }
 
     public void Dispose()

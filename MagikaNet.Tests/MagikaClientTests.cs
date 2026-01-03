@@ -9,7 +9,7 @@ public class MagikaClientTests
     {
         using var m = new MagikaClient();
 
-        var d = m.DetectPath("samples/forest.jpg");
+        var d = m.DetectPathJson("samples/forest.jpg");
         
         Assert.That(d, Contains.Substring("\"output\":\"jpeg\""));
     }
@@ -20,7 +20,7 @@ public class MagikaClientTests
         using var m = new MagikaClient();
 
         var str = "#!/bin/sh\necho hello\n";
-        var d = m.DetectBytes(Encoding.UTF8.GetBytes(str));
+        var d = m.DetectBytesJson(Encoding.UTF8.GetBytes(str));
         
         Assert.That(d, Contains.Substring("\"output\":\"shell\""));
     }
@@ -31,7 +31,7 @@ public class MagikaClientTests
         using var m = new MagikaClient();
         byte[] bytes = { };
 
-        var d = m.DetectBytes(bytes);
+        var d = m.DetectBytesJson(bytes);
         Assert.That(d, Contains.Substring("\"output\":\"empty\""));
     }
 }
