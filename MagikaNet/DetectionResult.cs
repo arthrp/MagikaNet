@@ -5,41 +5,41 @@ namespace MagikaNet;
 public class DetectionResult
 {
     [JsonPropertyName("status")]
-    public string Status { get; set; }
+    public required string Status { get; set; }
 
     [JsonPropertyName("type")]
-    public string FileType { get; set; }
+    public required string FileType { get; set; }
 
     [JsonPropertyName("value")]
-    public ValueData Value { get; set; }
+    public required ValueData Value { get; set; }
 }
 
 public class ValueData
 {
     [JsonPropertyName("output")]
-    public OutputData Output { get; set; }
+    public required OutputData Output { get; set; }
 
     [JsonPropertyName("score")]
-    public double Score { get; set; }
+    public required double Score { get; set; }
 }
 
 public class OutputData
 {
     [JsonPropertyName("label")]
-    public string Label { get; set; }
+    public required string Label { get; set; }
 
     [JsonPropertyName("mime_type")]
-    public string MimeType { get; set; }
+    public required string MimeType { get; set; }
 
     [JsonPropertyName("group")]
-    public string Group { get; set; }
+    public required string Group { get; set; }
 
     [JsonPropertyName("description")]
-    public string Description { get; set; }
+    public required string Description { get; set; }
 
     [JsonPropertyName("extensions")]
-    public List<string> Extensions { get; set; }
+    public required List<string> Extensions { get; set; }
 
     [JsonPropertyName("is_text")]
-    public bool IsText { get; set; }
+    public required bool IsText { get; set; }
 }
