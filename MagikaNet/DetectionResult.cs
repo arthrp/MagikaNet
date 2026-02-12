@@ -7,11 +7,14 @@ public class DetectionResult
     [JsonPropertyName("status")]
     public required string Status { get; set; }
 
+    [JsonPropertyName("message")]
+    public string? Message { get; set; }
+
     [JsonPropertyName("type")]
-    public required string FileType { get; set; }
+    public string? FileType { get; set; }
 
     [JsonPropertyName("value")]
-    public required ValueData Value { get; set; }
+    public ValueData? Value { get; set; }
 }
 
 public class ValueData

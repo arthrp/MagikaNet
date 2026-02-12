@@ -24,8 +24,8 @@ public class MagikaClientTests
         Assert.That(r, Is.Not.Null);
         Assert.That(r.Status, Is.EqualTo("ok"));
         Assert.That(r.FileType, Is.EqualTo("file"));
-        Assert.That(r.Value.Output.Label, Is.EqualTo("jpeg"));
-        Assert.That(r.Value.Output.MimeType, Is.EqualTo("image/jpeg"));
+        Assert.That(r.Value!.Output.Label, Is.EqualTo("jpeg"));
+        Assert.That(r.Value!.Output.MimeType, Is.EqualTo("image/jpeg"));
     }
 
     [Test]
@@ -50,7 +50,7 @@ public class MagikaClientTests
         Assert.That(r, Is.Not.Null);
         Assert.That(r.Status, Is.EqualTo("ok"));
         Assert.That(r.FileType, Is.EqualTo("file"));
-        Assert.That(r.Value.Output.Label, Is.EqualTo("shell"));
+        Assert.That(r.Value!.Output.Label, Is.EqualTo("shell"));
     }
 
     [Test]
@@ -61,5 +61,23 @@ public class MagikaClientTests
 
         var d = m.DetectBytesJson(bytes);
         Assert.That(d, Contains.Substring("label\":\"empty"));
+    }
+
+    [Test]
+    public void MissingFile_ReturnsErrorStatus()
+    {
+        using var m = new MagikaClient();
+
+        var result = m.DetectPath("nonexistent_file.txt");
+
+        Assert.That(result, Is.Not.Null);
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.Status, Is.EqualTo("error"));
+            Assert.That(result.Message, Is.Not.Null);
+            Assert.That(result.Message, Is.Not.Empty);
+            Assert.That(result.FileType, Is.Null);
+            Assert.That(result.Value, Is.Null);
+        });
     }
 }
